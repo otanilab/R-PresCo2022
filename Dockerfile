@@ -13,8 +13,11 @@ RUN apt-get update && apt-get install -y \
 COPY requirements.txt .
 
 RUN apt update
-RUN apt install -y git \
-    && apt install -y python3.9\
+RUN apt install mecab \
+    && apt install libmecab-dev \
+    && apt install libmecab-dev \
+    && apt install -y git \
+    && apt install -y python3.9 \
     && apt install -y python3-pip
 
 COPY requirements.txt /root
