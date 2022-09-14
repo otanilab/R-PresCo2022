@@ -1,0 +1,30 @@
+{
+    "name": "r-presco_app",
+    "dockerComposeFile": [
+        "../docker-compose.yml"
+    ],
+    "service": "app",
+    "remoteUser": "root",
+    "workspaceFolder": "/root",
+    "extensions": [
+        "ms-python.python",
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "kddejong.vscode-cfn-lint"
+    ],
+    "settings": {
+        "files.encoding": "utf8",
+        "python.linting.pylintEnabled": false,
+        "python.linting.flake8Enabled": true,
+        "editor.formatOnSave": true,
+        "python.linting.flake8Args": [
+            "--max-line-length=150"
+        ],
+        "eslint.workingDirectories": [
+            {
+                "mode": "auto"
+            }
+        ],
+        "cfnLint.path": "/home/jmc-dev/.pyenv/shims/cfn-lint"
+    }
+}
