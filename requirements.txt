@@ -30,6 +30,7 @@ jupyterlab-widgets==3.0.3
 lxml==4.9.1
 MarkupSafe==2.1.1
 matplotlib-inline==0.1.6
+mecab-python3==1.0.5
 mistune==2.0.4
 nbclient==0.6.8
 nbconvert==7.0.0
