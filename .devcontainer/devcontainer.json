@@ -5,7 +5,7 @@
     ],
     "service": "app",
     "remoteUser": "root",
-    "workspaceFolder": "/root",
+    "workspaceFolder": "/R-PresCo2022",
     "extensions": [
         "ms-python.python",
         "dbaeumer.vscode-eslint",
