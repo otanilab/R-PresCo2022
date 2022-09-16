@@ -18,7 +18,7 @@ RUN apt update \
     && apt install -y python3.9 \
     && apt install -y python3-pip
 
-COPY requirements.txt /root
+COPY requirements.txt .
 RUN pip install -r requirements.txt
 
 RUN git clone https://github.com/otanilab/R-PresCo2022.git
