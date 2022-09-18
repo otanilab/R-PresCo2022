@@ -8,9 +8,9 @@
 #include <math.h>
 
 // 定数の定義
-#define GENERATION_MAX	2000					// 世代交代数
+#define GENERATION_MAX	10000					// 世代交代数
 #define WPOP_SIZE		1000						// 全体解集団内の個体の数
-#define PPOP_SIZE		950						// 部分解集団内の個体の数
+#define PPOP_SIZE		900					// 部分解集団内の個体の数
 #define MUTATE_PROB		0.0001 * RAND_MAX		  	// 突然変異確率
 #define MUTATE_PROBI	0.1 * RAND_MAX			// 突然変異確率×乱数の最大値
 #define MAX_NUM			WCHROM_LEN*PCHROM_LEN	// フロイド問題におけるN
