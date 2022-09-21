@@ -64,10 +64,18 @@ void PartialIndividual::newGeneration(PartialIndividual* p1, PartialIndividual* 
 // ??R???
 void PartialIndividual::mutate()
 {
-	int i;
+	int i, c, r1, r2;
 
 	for(i = 0; i < PCHROM_LEN; i++) {
 		if(rand() < MUTATE_PROB)
-			chrom[i] = rand();
+		{
+			r1 = rand() % PCHROM_LEN;
+			do {
+				r2 = rand() % PCHROM_LEN;
+			}while (r1 == r2);
+			c = chrom[r1];
+			chrom[r1] = chrom[r2];
+			chrom[r2] = c;
+		}
 	}
 }

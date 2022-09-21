@@ -56,7 +56,7 @@ int main()
         for(int xs = 0; xs < 45; xs++) {
             if(d == 1) {
                 s[cnt]++;
-                for(int i = 0; i < 8; i++) {
+                for(int i = 0; i < 16; i++) {
                     if(s[cnt] > 1500 * i && s[cnt] <= 1500 * (i + 1)) {
                         num = s[cnt] - 1500 * i;
                     }
@@ -88,7 +88,7 @@ int main()
                 cnt++;
             }else {
                 s[cnt]++;
-                for(int i = 0; i < 8; i++) {
+                for(int i = 0; i < 16; i++) {
                     if(s[cnt] > 1500 * i && s[cnt] <= 1500 * (i + 1)) {
                         num = s[cnt] - 1500 * i;
                     }
