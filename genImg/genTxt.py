@@ -1,6 +1,7 @@
 import MeCab
 import requests
 import csv
+import request
 
 
 class Words:
@@ -19,7 +20,7 @@ class Morpheme:
             self.bases.append((((result[6].split(':'))[-1]).split('/'))[0])
 
 def translate(txt):
-    key = '#########################'
+    key = request.key
     params = {
         "auth_key": key,
         "text": txt,
@@ -37,10 +38,10 @@ with open('R-PresCo.csv') as f:
     for i in range(len(rows)):
         if rows[i-1][2] != "ある":
             del rows[i-1]
-            words = Words(rows[i-1][3])
-            print(words.words)
-            rows[i-1][3] = (Morpheme(words.words).bases)
-            print(rows)
+        words = Words(str(rows[i-1][3]))
+        print(words.words)
+        rows[i-1][3] = (Morpheme(words.words).bases)
+        print(rows)
 
 sentence = "入学式で集合写真を撮る"
 words = Words(sentence)
