@@ -8,6 +8,7 @@ using namespace std;
 
 #define PhotoNum 1500    //素材画像の枚数
 #define HeightSize 42    //素材画像の縦のサイズ変更
+#define outputnum 10     //書き出し回数
 
 vector<int> B, G, R;
 
@@ -217,7 +218,9 @@ int main(int argc, char *argv[])
 
         cout << i << endl;
         //画素値の中央値の書き出し
-        fprintf(fp, "%d,%d,%d\n", B[img.rows * img.cols / 2], G[img.rows * img.cols / 2], R[img.rows * img.cols / 2]);
+        for(int i = 0; i < outputnum; i++) {
+            fprintf(fp, "%d,%d,%d\n", B[img.rows * img.cols / 2], G[img.rows * img.cols / 2], R[img.rows * img.cols / 2]);
+        }
     }
     fclose(fp);
     //cv::waitKey(0);

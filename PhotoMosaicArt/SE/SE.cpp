@@ -125,7 +125,8 @@ int main()
 		}
 		sortn(0, PCHROM_LEN-1);
 		for(j = 0; j < ArtPhotoNum / WCHROM_LEN; j++) {
-			photo_sub[i * ArtPhotoNum / WCHROM_LEN + j] = pchrom_sub[j];
+			//photo_sub[i * ArtPhotoNum / WCHROM_LEN + j] = pchrom_sub[j]; //右並べ
+			photo_sub[i + WCHROM_LEN * j] = pchrom_sub[j];  //交互
 		}
 	}
 

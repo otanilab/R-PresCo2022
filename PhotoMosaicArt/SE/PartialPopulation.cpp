@@ -22,6 +22,7 @@ PartialPopulation::~PartialPopulation()
 void PartialPopulation::newGeneration()
 {
 	int i, j, a, index1, index2;
+
 	/*
 	for(i = PPOP_SIZE / 4 * 3, j = 0; i < PPOP_SIZE; i += 2, j++) {
 		a = ((rand() % (PPOP_SIZE / 4 - 1)) + j) % (PPOP_SIZE / 4);
@@ -30,7 +31,10 @@ void PartialPopulation::newGeneration()
 		pop[i]->newGeneration(pop[j], pop[a], index1, index2);
 		pop[i+1]->newGeneration(pop[a], pop[j], index1, index2);
 	}
+	for(i = 0; i < PPOP_SIZE / 4 * 3; i++)
+		pop[i]->newGeneration();
 	*/
+	/*
 	for(i = PPOP_SIZE / 8 * 1, j = 0; i < PPOP_SIZE; i += 2, j++) {
 		a = ((rand() % (PPOP_SIZE / 8 - 7)) + j) % (PPOP_SIZE / 8);
 		index1 = rand() % PCHROM_LEN;
@@ -39,6 +43,17 @@ void PartialPopulation::newGeneration()
 		pop[i+1]->newGeneration(pop[a], pop[j], index1, index2);
 	}
 	for(i = 0; i < PPOP_SIZE / 8 * 7; i++)
+		pop[i]->newGeneration();
+	*/
+
+	for(i = PPOP_SIZE / 20 * 1, j = 0; i < PPOP_SIZE; i += 2, j++) {
+		a = ((rand() % (PPOP_SIZE / 20 - 19)) + j) % (PPOP_SIZE / 20);
+		index1 = rand() % (PCHROM_LEN - 1);
+		index2 = ((rand() % (PCHROM_LEN - 2) + 1) + index1) % (PCHROM_LEN - 1);
+		pop[i]->newGeneration(pop[j], pop[a], index1, index2);
+		pop[i+1]->newGeneration(pop[a], pop[j], index1, index2);
+	}
+	for(i = 0; i < PPOP_SIZE / 20 * 19; i++)
 		pop[i]->newGeneration();
 }
 

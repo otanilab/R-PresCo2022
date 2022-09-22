@@ -49,9 +49,9 @@ int main()
         for(int xs = 0; xs < 45; xs++) {
             for(int y = ys * 79; y < (ys + 1) * 79; y++){
                 for(int x = xs * 119; x < (xs + 1) * 119; x++) {
-                    img.at<cv::Vec3b>(y, x)[0] = 0.85 * (int)img.at<cv::Vec3b>(y, x)[0] + 0.15 * (int)OB[cnt];
-                    img.at<cv::Vec3b>(y, x)[1] = 0.85 * (int)img.at<cv::Vec3b>(y, x)[1] + 0.15 * (int)OG[cnt];
-                    img.at<cv::Vec3b>(y, x)[2] = 0.85 * (int)img.at<cv::Vec3b>(y, x)[2] + 0.15 * (int)OR[cnt];
+                    img.at<cv::Vec3b>(y, x)[0] = 0.75 * (int)img.at<cv::Vec3b>(y, x)[0] + 0.25 * (int)OB[cnt];
+                    img.at<cv::Vec3b>(y, x)[1] = 0.75 * (int)img.at<cv::Vec3b>(y, x)[1] + 0.25 * (int)OG[cnt];
+                    img.at<cv::Vec3b>(y, x)[2] = 0.75 * (int)img.at<cv::Vec3b>(y, x)[2] + 0.25 * (int)OR[cnt];
                 }
             }
             cnt++;

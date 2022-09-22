@@ -9,7 +9,10 @@
 #include <iostream>
 using namespace std;
 
-#define WidthSize 120
+#define WidthSize 120             //構成画像の横ピクセル数
+#define OriginalPhotoSplit 45     //一辺の画像枚数
+#define ArtPhotoNum     2025      //モザイクアートの構成写真枚数
+
 vector<string> split(string& input, char delimiter)
 {
     istringstream stream(input);
@@ -40,9 +43,9 @@ int main()
     }
 
     //読込
-    for(int i = 0; i < 2025; i++) {
+    for(int i = 0; i < ArtPhotoNum; i++) {
         s.push_back(stoi(strvec.at(i)));
-        cout << i + 1 << " " << s[i] << endl;
+        cout << i << " " << s[i] << endl;
     }
     cv::Mat img;
     cv::Mat x;
@@ -52,16 +55,19 @@ int main()
     int num;
     cnt = 0;
 
-    for(int ys = 0; ys < 45; ys++) {
-        for(int xs = 0; xs < 45; xs++) {
+    for(int ys = 0; ys < OriginalPhotoSplit; ys++) {
+        for(int xs = 0; xs < OriginalPhotoSplit; xs++) {
             if(d == 1) {
+                /*
                 s[cnt]++;
                 for(int i = 0; i < 16; i++) {
                     if(s[cnt] > 1500 * i && s[cnt] <= 1500 * (i + 1)) {
                         num = s[cnt] - 1500 * i;
                     }
                 } 
-                cout << cnt << " " << num << endl;
+                */
+                num = s[cnt] / 10 + 1;
+                cout << cnt << " " << num << " " << s[cnt] << endl;
 
                 //素材画像の読込
                 if(num < 10) {
@@ -87,13 +93,16 @@ int main()
                 d = 0;
                 cnt++;
             }else {
+                /*
                 s[cnt]++;
                 for(int i = 0; i < 16; i++) {
                     if(s[cnt] > 1500 * i && s[cnt] <= 1500 * (i + 1)) {
                         num = s[cnt] - 1500 * i;
                     }
-                } 
-                cout << cnt << " " << num << endl;
+                }
+                */
+                num = s[cnt] / 10 + 1;
+                cout << cnt << " " << num << " " << s[cnt] << endl;
 
                 //素材画像の読込
                 if(num  < 10) {
