@@ -1,7 +1,7 @@
 import MeCab
 import requests
 import csv
-import request
+import key
 
 class Words:
     def __init__(self, sentence):
@@ -24,19 +24,23 @@ def extract(morphemes):
             result.append(word)
     return result
 
-def translate(txt):
-    key = request.key
-    params = {
-        "auth_key": key,
-        "text": txt,
-        "source_lang": 'JA',
-        "target_lang": 'EN'
-    }
-    request = requests.post("https://api.deepl.com/v2/translate", data=params)
-    result = request.json()
-    return result["translations"][0]["text"]
+def translate(texts, key):
+    print(texts)
+    en_words = []
+    key = key
+    for txt in texts:
+        params = {
+            "auth_key": key,
+            "text": txt,
+            "source_lang": 'JA',
+            "target_lang": 'EN'
+        }
+        request = requests.post("https://api.deepl.com/v2/translate", data=params)
+        result = request.json()
+        en_words.append(result["translations"][0]["text"])
+    return en_words
 
-with open('R-PresCo.csv') as f:
+with open('/Users/so/Desktop/R-PresCo2022/genImg/R-PresCo.csv') as f:
     reader = csv.reader(f)
     words = []
     rows = [row for row in reader]
@@ -45,4 +49,6 @@ with open('R-PresCo.csv') as f:
         if row[2] == 'ある':
             words = Words(row[3])
             morphemes = Morpheme(words.words)
-            print(extract(morphemes.morphemes))
+            jap_words = extract(morphemes.morphemes)
+            en_words = translate(jap_words ,key.key)
+            print(en_words)
