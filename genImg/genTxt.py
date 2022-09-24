@@ -36,7 +36,7 @@ def translate(txt):
     result = request.json()
     return result["translations"][0]["text"]
 
-with open('/Users/so/Desktop/R-PresCo2022/genImg/R-PresCo.csv') as f:
+with open('R-PresCo.csv') as f:
     reader = csv.reader(f)
     words = []
     rows = [row for row in reader]
