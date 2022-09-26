@@ -2,6 +2,7 @@ import MeCab
 import requests
 import csv
 import key
+import re
 
 class Words:
     def __init__(self, sentence):
@@ -37,6 +38,7 @@ def translate(texts, key):
         }
         request = requests.post("https://api.deepl.com/v2/translate", data=params)
         result = request.json()
+        result["translations"][0]["text"] = re.sub("\(.+?\)", "", result["translations"][0]["text"])
         en_words.append(result["translations"][0]["text"])
     return en_words
 
