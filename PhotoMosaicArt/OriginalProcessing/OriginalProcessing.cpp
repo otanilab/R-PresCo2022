@@ -7,7 +7,7 @@
 using namespace std;
 
 #define OriginalHeightSize 720 //元画像の縦のサイズ変更
-#define OriginalPhotoSplit 45 //モザイクアートの縦横の画像の枚数
+#define OriginalPhotoSplit 60 //モザイクアートの縦横の画像の枚数
 
 vector<int> B, G, R;
 

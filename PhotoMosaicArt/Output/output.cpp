@@ -10,8 +10,8 @@
 using namespace std;
 
 #define WidthSize 120             //構成画像の横ピクセル数
-#define OriginalPhotoSplit 45     //一辺の画像枚数
-#define ArtPhotoNum     2025      //モザイクアートの構成写真枚数
+#define OriginalPhotoSplit 60     //一辺の画像枚数
+#define ArtPhotoNum     OriginalPhotoSplit * OriginalPhotoSplit      //モザイクアートの構成写真枚数
 
 vector<string> split(string& input, char delimiter)
 {
@@ -60,62 +60,83 @@ int main()
             if(d == 1) {
                 /*
                 s[cnt]++;
-                for(int i = 0; i < 16; i++) {
-                    if(s[cnt] > 1500 * i && s[cnt] <= 1500 * (i + 1)) {
-                        num = s[cnt] - 1500 * i;
+                for(int i = 0; i < 8; i++) {
+                    if(s[cnt] > 4800 * i && s[cnt] <= 4800 * (i + 1)) {
+                        num = s[cnt] - 4800 * i;
+                        num--;
+                        num /= 4;
+                        num++;
+                        cout << cnt << " " << num << " " << s[cnt] << endl;
                     }
-                } 
+                }
                 */
-                num = s[cnt] / 10 + 1;
+                /*
+                num = s[cnt] / 4 + 1;
                 cout << cnt << " " << num << " " << s[cnt] << endl;
+                */
+                num = s[cnt] + 1;
+                cout << cnt << " " << num << endl;
 
                 //素材画像の読込
                 if(num < 10) {
-                    FN = FolderName + "0000" + to_string(num) + ".jpg";
+                    FN = FolderName + "0000" + to_string(num) + ".png";
                     x = cv::imread(FN, 1);
                 } else if(num < 100) {
-                    FN = FolderName + "000" + to_string(num) + ".jpg";
+                    FN = FolderName + "000" + to_string(num) + ".png";
                     x = cv::imread(FN, 1);
                 } else if(num  < 1000) {
-                    FN = FolderName + "00" + to_string(num) + ".jpg";
+                    FN = FolderName + "00" + to_string(num) + ".png";
+                    x = cv::imread(FN, 1);
+                } else if(num < 10000){
+                    FN = FolderName + "0" + to_string(num) + ".png";
                     x = cv::imread(FN, 1);
                 } else {
-                    FN = FolderName + "0" + to_string(num) + ".jpg";
+                    FN = FolderName + to_string(num) + ".png";
                     x = cv::imread(FN, 1);
                 }
-
                 //画像サイズを小さくする(120 × 80)
                 double ResizeRate = (double)WidthSize / (double)x.size().width;
                 cv::resize(x, x, cv::Size(), ResizeRate, ResizeRate);
 
                 //画像を3 : 2に調整
-                x = cv::Mat(x, cv::Rect(0, 0, 119, 79)).clone();
+                x = cv::Mat(x, cv::Rect(0, 0, 60, 40)).clone();
                 d = 0;
                 cnt++;
             }else {
                 /*
                 s[cnt]++;
-                for(int i = 0; i < 16; i++) {
-                    if(s[cnt] > 1500 * i && s[cnt] <= 1500 * (i + 1)) {
-                        num = s[cnt] - 1500 * i;
+                for(int i = 0; i < 8; i++) {
+                    if(s[cnt] > 4800 * i && s[cnt] <= 4800 * (i + 1)) {
+                        num = s[cnt] - 4800 * i;
+                        num--;
+                        num /= 4;
+                        num++;
+                        cout << cnt << " " << num << " " << s[cnt] << endl;
                     }
                 }
                 */
-                num = s[cnt] / 10 + 1;
+                /*
+                num = s[cnt] / 4 + 1;
                 cout << cnt << " " << num << " " << s[cnt] << endl;
+                */
+                num = s[cnt] + 1;
+                cout << cnt << " " << num << endl;
 
                 //素材画像の読込
                 if(num  < 10) {
-                    FN = FolderName + "0000" + to_string(num) + ".jpg";
+                    FN = FolderName + "0000" + to_string(num) + ".png";
                     y = cv::imread(FN, 1);
                 } else if(num < 100) {
-                    FN = FolderName + "000" + to_string(num) + ".jpg";
+                    FN = FolderName + "000" + to_string(num) + ".png";
                     y = cv::imread(FN, 1);
                 } else if(num < 1000) {
-                    FN = FolderName + "00" + to_string(num) + ".jpg";
+                    FN = FolderName + "00" + to_string(num) + ".png";
+                    y = cv::imread(FN, 1);
+                } else if(num < 10000){
+                    FN = FolderName + "0" + to_string(num) + ".png";
                     y = cv::imread(FN, 1);
                 } else {
-                    FN = FolderName + "0" + to_string(num) + ".jpg";
+                    FN = FolderName + to_string(num) + ".png";
                     y = cv::imread(FN, 1);
                 }
 
@@ -124,7 +145,7 @@ int main()
                 cv::resize(y, y, cv::Size(), ResizeRate, ResizeRate);
 
                 //画像を3 : 2に調整
-                y = cv::Mat(y, cv::Rect(0, 0, 119, 79)).clone();
+                y = cv::Mat(y, cv::Rect(0, 0, 60, 40)).clone();
 
                 //画像を一枚ずつ横に合成
                 cv::hconcat(x, y, x);

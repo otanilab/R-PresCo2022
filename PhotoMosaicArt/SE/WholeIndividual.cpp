@@ -4,8 +4,8 @@
 using namespace std;
 PartialPopulation** WholeIndividual::ppop = NULL;
 
-extern vector<int> B, G, R;
-extern vector<int> OB, OG, OR;
+extern vector<int> B, G, R;     //構成画像のRGBそれぞれの中央値
+extern vector<int> OB, OG, OR;  //元画像の各領域のRGBのそれぞれの中央値
 
 // コンストラクタ
 WholeIndividual::WholeIndividual()
@@ -81,64 +81,42 @@ void WholeIndividual::mutate()
 			chrom[i] = ppop[i]->pop[rand() % PPOP_SIZE];
 	}
 }
-void WholeIndividual::sortn(int lb, int ub)
-{
-	int i, j, k;
-	double pivot;
-	int tmp;
 
-	if(lb < ub) {
-		k = (lb + ub) / 2;
-		pivot = pchrom_num[k];
-		i = lb;
-		j = ub;
-		do {
-			while(pchrom_num[i] < pivot) {
-				i++;
-			}
-			while(pchrom_num[j] > pivot) {
-				j--;
-			}
-			if(i <= j) {
-				tmp = pchrom_num[i];
-				pchrom_num[i] = pchrom_num[j];
-				pchrom_num[j] = tmp;
-				tmp = pchrom_sub[i];
-				pchrom_sub[i] = pchrom_sub[j];
-               	pchrom_sub[j] = tmp;
-				i++;
-				j--;
-			}
-		} while(i <= j);
-		sortn(lb, j);
-		sortn(i, ub);
-	}
-}
 
 // 評価
 void WholeIndividual::evaluation()
 {
 	int i, j, k;
+	double ave = 0, diff = 0;
 
 	fitness = 0.0;
+	//初期化
+	for(i = 0; i < PEOPLE_NUM; i++) {
+		used_photo_cnt[i] = 0;
+	}
 	for(i = 0; i < WCHROM_LEN; i++) {
-		//初期化
 		for(j = 0; j < PCHROM_LEN; j++) {
-			pchrom_sub[j] = i * PCHROM_LEN + j;
-		}
-
-		for(j = 0; j < PCHROM_LEN; j++) {
-			pchrom_num[j] = chrom[i]->chrom[j];
-		}
-		sortn(0, PCHROM_LEN-1);
-		for(j = 0; j < ArtPhotoNum / WCHROM_LEN; j++) {
-			//photo_sub[i * ArtPhotoNum / WCHROM_LEN + j] = pchrom_sub[j]; //右並べ：i * ArtPhotoNum / WCHROM_LEN + j
-			photo_sub[i + WCHROM_LEN * j] = pchrom_sub[j];  //交互
+			photo_sub[i * PCHROM_LEN + j] = chrom[i]->chrom[j];
+			used_photo_cnt[chrom[i]->chrom[j] / (MATERIAL_PHOTO_NUM / PEOPLE_NUM)]++;
 		}
 	}
+	//平均
+	for(i = 0; i < PEOPLE_NUM; i++) {
+		ave += used_photo_cnt[i];
+	}
+	ave /= PEOPLE_NUM;
+
+	//分散
+	for(i = 0; i < PEOPLE_NUM; i++) {
+		diff += (used_photo_cnt[i] - ave) * (used_photo_cnt[i] - ave);
+	}
+	diff /= PEOPLE_NUM;
+
+	//適応度算出
 	for(i = 0; i < ArtPhotoNum; i++) {
 		double dis = (B[photo_sub[i]] - OB[i]) * (B[photo_sub[i]] - OB[i]) + (G[photo_sub[i]] - OG[i]) * (G[photo_sub[i]] - OG[i]) + (R[photo_sub[i]] - OR[i]) * (R[photo_sub[i]] - OR[i]);
 		dis = sqrt(dis);
+		dis += + diff * SCALE;
 		fitness += dis;
 	}
 	fitness = fabs(fitness);

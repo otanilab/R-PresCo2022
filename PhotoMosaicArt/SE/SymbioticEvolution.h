@@ -9,6 +9,7 @@ public:
 	~SymbioticEvolution();
 	void solve();
 
+	double used_photo_cnt[PEOPLE_NUM];
 	int best[MAX_NUM];
 	double bestfit;
 

@@ -6,9 +6,9 @@
 #include <vector>
 using namespace std;
 
-#define PhotoNum 1500    //素材画像の枚数
+#define PhotoNum 40000    //素材画像の枚数
 #define HeightSize 42    //素材画像の縦のサイズ変更
-#define outputnum 10     //書き出し回数
+#define outputnum 1     //書き出し回数
 
 vector<int> B, G, R;
 
@@ -178,16 +178,19 @@ int main(int argc, char *argv[])
     for(int i = 1; i <= PhotoNum; i++) {
         //画像入力
         if(i < 10) {
-            FN = FolderName + "0000" + to_string(i) + ".jpg";
+            FN = FolderName + "0000" + to_string(i) + ".png";
             img= cv::imread(FN, 1);
         } else if(i < 100) {
-            FN = FolderName + "000" + to_string(i) + ".jpg";
+            FN = FolderName + "000" + to_string(i) + ".png";
             img = cv::imread(FN, 1);
         } else if(i < 1000) {
-            FN = FolderName + "00" + to_string(i) + ".jpg";
+            FN = FolderName + "00" + to_string(i) + ".png";
+            img = cv::imread(FN, 1);
+        } else if(i < 10000){
+            FN = FolderName + "0" + to_string(i) + ".png";
             img = cv::imread(FN, 1);
         } else {
-            FN = FolderName + "0" + to_string(i) + ".jpg";
+            FN = FolderName + to_string(i) + ".png";
             img = cv::imread(FN, 1);
         }
 

@@ -10,10 +10,11 @@
 #include <iostream>
 using namespace std;
 
-vector<int> B, G, R;
-vector<int> OB, OG, OR;
-int pchrom_sub[PCHROM_LEN], pchrom_num[PCHROM_LEN];
-int photo_sub[ArtPhotoNum];
+vector<int> B, G, R;           //構成画像のRGBそれぞれの中央値
+vector<int> OB, OG, OR;        //元画像の各領域のRGBそれぞれの中央値       
+int pchrom_sub[PCHROM_LEN];    //部分解写真番号
+int pchrom_num[PCHROM_LEN];    //部分解の順序
+int photo_sub[ArtPhotoNum];    //全体解の写真番号
 
 //カンマ区切りで読み込む関数
 vector<string> split(string& input, char delimiter)
@@ -27,6 +28,7 @@ vector<string> split(string& input, char delimiter)
     return result;
 }
 
+//部分解の順序のソート関数
 void sortn(int lb, int ub)
 {
 	int i, j, k;
@@ -67,6 +69,7 @@ int main()
 	int i, j;
 	float comptime;
 	clock_t start;
+	double used_photo_cnt[PEOPLE_NUM];
 	SymbioticEvolution *se;
 
 	// 時間計測スタート
@@ -114,25 +117,24 @@ int main()
 	comptime = (float)(clock() - start) / CLOCKS_PER_SEC;
 
 	// 結果表示
-	for(i = 0; i < WCHROM_LEN; i++) {
-		//初期化
-		for(j = 0; j < PCHROM_LEN; j++) {
-			pchrom_sub[j] = i * PCHROM_LEN + j;
-		}
-
-		for(j = 0; j < PCHROM_LEN; j++) {
-			pchrom_num[j] = se->wpop->pop[0]->chrom[i]->chrom[j];
-		}
-		sortn(0, PCHROM_LEN-1);
-		for(j = 0; j < ArtPhotoNum / WCHROM_LEN; j++) {
-			//photo_sub[i * ArtPhotoNum / WCHROM_LEN + j] = pchrom_sub[j]; //右並べ
-			photo_sub[i + WCHROM_LEN * j] = pchrom_sub[j];  //交互
-		}
+	//初期化
+	for(i = 0; i < PEOPLE_NUM; i++) {
+		used_photo_cnt[i] = 0;
 	}
 
+	for(i = 0; i < WCHROM_LEN; i++) {
+		for(j = 0; j < PCHROM_LEN; j++) {
+			used_photo_cnt[se->best[i * PCHROM_LEN + j] / (MATERIAL_PHOTO_NUM / PEOPLE_NUM)]++;
+		}
+	}
+	//平均
+	for(i = 0; i < PEOPLE_NUM; i++) {
+		printf("%d人目　%f枚\n",i, used_photo_cnt[i]);
+	}
+	//出力
 	for(i = 0; i < ArtPhotoNum; i++) {
-		cout << i << " " << photo_sub[i] << endl;
-		fprintf(fp, "%d,", photo_sub[i]);
+		cout << i << " " << se->best[i] << endl;
+		fprintf(fp, "%d,", se->best[i]);
 	}
 
     fclose(fp);

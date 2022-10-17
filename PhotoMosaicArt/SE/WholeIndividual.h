@@ -13,9 +13,8 @@ public:
 	void newGeneration(WholeIndividual* p);
 	void newGeneration(WholeIndividual* p1, WholeIndividual* p2, int index1, int index2);
 	void evaluation();
-	int pchrom_sub[PCHROM_LEN], pchrom_num[PCHROM_LEN];
+	int used_photo_cnt[PEOPLE_NUM];
 	int photo_sub[ArtPhotoNum];
-	void sortn(int lb, int ub);
 
 	PartialIndividual* chrom[WCHROM_LEN];	// ���F��
 	double fitness;							// �K���x
