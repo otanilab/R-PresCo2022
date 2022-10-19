@@ -116,8 +116,8 @@ void WholeIndividual::evaluation()
 	for(i = 0; i < ArtPhotoNum; i++) {
 		double dis = (B[photo_sub[i]] - OB[i]) * (B[photo_sub[i]] - OB[i]) + (G[photo_sub[i]] - OG[i]) * (G[photo_sub[i]] - OG[i]) + (R[photo_sub[i]] - OR[i]) * (R[photo_sub[i]] - OR[i]);
 		dis = sqrt(dis);
-		dis += + diff * SCALE;
 		fitness += dis;
 	}
+	fitness += diff * SCALE;
 	fitness = fabs(fitness);
 }

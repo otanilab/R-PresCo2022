@@ -70,6 +70,7 @@ int main()
 	float comptime;
 	clock_t start;
 	double used_photo_cnt[PEOPLE_NUM];
+	double ave = 0, diff = 0;
 	SymbioticEvolution *se;
 
 	// 時間計測スタート
@@ -130,7 +131,15 @@ int main()
 	//平均
 	for(i = 0; i < PEOPLE_NUM; i++) {
 		printf("%d人目　%f枚\n",i, used_photo_cnt[i]);
+		ave += used_photo_cnt[i];
 	}
+	ave /= PEOPLE_NUM;
+
+	//分散
+	for(i = 0; i < PEOPLE_NUM; i++) {
+		diff += (used_photo_cnt[i] - ave) * (used_photo_cnt[i] - ave);
+	}
+	diff /= PEOPLE_NUM;
 	//出力
 	for(i = 0; i < ArtPhotoNum; i++) {
 		cout << i << " " << se->best[i] << endl;
@@ -139,7 +148,8 @@ int main()
 
     fclose(fp);
 
-	printf("\n最良個体の適応度：%f\n", se->bestfit);
+	printf("\n画像としての良さ：%f, 分散：%f\n", se->bestfit - diff * SCALE, diff);
+	printf("最良個体の適応度：%f\n", se->bestfit);
 	printf("処理時間：%f秒\n", comptime);
 
 	// 後処理

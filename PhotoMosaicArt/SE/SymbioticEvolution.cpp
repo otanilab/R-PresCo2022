@@ -35,6 +35,7 @@ SymbioticEvolution::~SymbioticEvolution()
 void SymbioticEvolution::solve(void)
 {
 	int gen, i, j;
+	double ave = 0, diff = 0;
 
 	for(gen = 1; gen <= GENERATION_MAX; gen++) {
 		// 次世代生成
@@ -62,11 +63,24 @@ void SymbioticEvolution::solve(void)
 					used_photo_cnt[best[i * PCHROM_LEN + j] / (MATERIAL_PHOTO_NUM / PEOPLE_NUM)]++;
 				}
 			}
+			//平均
+			for(i = 0; i < PEOPLE_NUM; i++) {
+				printf("%d人目　%f枚\n",i, used_photo_cnt[i]);
+				ave += used_photo_cnt[i];
+			}
+			ave /= PEOPLE_NUM;
+
+			//分散
+			for(i = 0; i < PEOPLE_NUM; i++) {
+				diff += (used_photo_cnt[i] - ave) * (used_photo_cnt[i] - ave);
+			}
+			diff /= PEOPLE_NUM;
 
 			for(i = 0; i < PEOPLE_NUM; i++) {
 				printf("%d人目　%f枚\n",i, used_photo_cnt[i]);
 			}
-
+			if(diff <= 0.25) printf("0.25未満です！！！！！！！");
+			printf("\n画像としての良さ：%f, 分散：%f\n", bestfit - diff * SCALE, diff);
 			printf("第%d世代\t最良個体の適応度は%f\n", gen, bestfit);
 		}
 	}
